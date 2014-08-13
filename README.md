@@ -1,109 +1,42 @@
-《The Swift Programming Language》in Chinese
-=============================================
+# Summary
 
-中文版Apple官方Swift教程《The Swift Programming Language》
+* [欢迎使用 Swift](chapter1/chapter1.md)
+   * [关于 Swift](chapter1/01_swift.md)
+   * [Swift 初见](chapter1/02_a_swift_tour.md)
+   * [Swift 版本历史记录](chapter1/03_revision_history.md)
+* [Swift 教程](chapter2/chapter2.md)
+   * [基础部分](chapter2/01_The_Basics.md)
+   * [基本运算符](chapter2/02_Basic_Operators.md)
+   * [字符串和字符](chapter2/03_Strings_and_Characters.md)
+   * [集合类型](chapter2/04_Collection_Types.md)
+   * [控制流](chapter2/05_Control_Flow.md)
+   * [函数](chapter2/06_Functions.md)
+   * [闭包](chapter2/07_Closures.md)
+   * [枚举](chapter2/08_Enumerations.md)
+   * [类和结构体](chapter2/09_Classes_and_Structures.md)
+   * [属性](chapter2/10_Properties.md)
+   * [方法](chapter2/11_Methods.md)
+   * [下标脚本](chapter2/12_Subscripts.md)
+   * [继承](chapter2/13_Inheritance.md)
+   * [构造过程](chapter2/14_Initialization.md)
+   * [析构过程](chapter2/15_Deinitialization.md)
+   * [自动引用计数](chapter2/16_Automatic_Reference_Counting.md)
+   * [可选链](chapter2/17_Optional_Chaining.md)
+   * [类型转换](chapter2/18_Type_Casting.md)
+   * [嵌套类型](chapter2/19_Nested_Types.md)
+   * [扩展](chapter2/20_Extensions.md)
+   * [协议](chapter2/21_Protocols.md)
+   * [泛型](chapter2/22_Generics.md)
+   * [高级操作符](chapter2/23_Advanced_Operators.md)
+* [语言参考](chapter3/chapter3.md)
+   * [关于语言参考](chapter3/01_About_the_Language_Reference.md)
+   * [词法结构](chapter3/02_Lexical_Structure.md)
+   * [类型](chapter3/03_Types.md)
+   * [表达式](chapter3/04_Expressions.md)
+   * [语句](chapter3/10_Statements.md)
+   * [声明](chapter3/05_Declarations.md)
+   * [特性](chapter3/06_Attributes.md)
+   * [模式](chapter3/07_Patterns.md)
+   * [泛型参数](chapter3/08_Generic_Parameters_and_Arguments.md)
+   * [语法总结](chapter3/09_Summary_of_the_Grammar.md)
 
-中文Swift社区[Swiftist](http://swiftist.org/)，新社区，正在建设中，感兴趣的朋友可以一起参与进来。
-
-# 参考译者
-
-* 欢迎使用 Swift
-   * 关于 Swift ([numbbbbb])
-   * Swift 初见 ([numbbbbb])
-* Swift 教程
-   * 基础部分 ([numbbbbb], [lyuka], [JaySurplus])
-   * 基本操作符 ([xielingwang])
-   * 字符串和字符 ([wh1100717])
-   * 集合类型 ([zqp])
-   * 控制流 ([vclwei], [coverxit], [NicePiao])
-   * 函数 ([honghaoz])
-   * 闭包 ([wh1100717])
-   * 枚举 ([yankuangshi])
-   * 类和结构体 ([JaySurplus])
-   * 属性 ([shinyzhu])
-   * 方法 ([pp-prog])
-   * 下标 ([siemenliu])
-   * 继承 ([Hawstein])
-   * 构造过程 ([lifedim])
-   * 析构过程 ([bruce0505])
-   * 自动引用计数 ([TimothyYe])
-   * 可选链 ([Jasonbroker])
-   * 类型检查 ([xiehurricane])
-   * 嵌套类型 ([Lin-H])
-   * 扩展 ([lyuka])
-   * 协议 ([geek5nan])
-   * 泛型 ([takalard])
-   * 高级操作符 ([xielingwang])
-* 语言参考
-   * 关于语言参考 ([dabing1022])
-   * 词法结构 ([superkam])
-   * 类型 ([lyuka])
-   * 表达式 ([sg552] )
-   * 语句 ([coverxit])
-   * 声明 ([marsprince])
-   * 特性 ([Hawstein])
-   * 模式 ([honghaoz])
-   * 泛型参数 ([fd5788])
-   * 语法总结 ([StanZhai])
-
-# 开源协议
-基于[WTFPL](http://en.wikipedia.org/wiki/WTFPL)协议开源。
-
-
-
-[numbbbbb]:https://github.com/numbbbbb
-[stanzhai]:https://github.com/stanzhai
-[coverxit]:https://github.com/coverxit
-[wh1100717]:https://github.com/wh1100717
-[TimothyYe]:https://github.com/TimothyYe
-[honghaoz]:https://github.com/honghaoz
-[lyuka]:https://github.com/lyuka
-[JaySurplus]:https://github.com/JaySurplus
-[Hawstein]:https://github.com/Hawstein
-[geek5nan]:https://github.com/geek5nan
-[yankuangshi]:https://github.com/yankuangshi
-[xielingwang]:https://github.com/xielingwang
-[yulingtianxia]:https://github.com/yulingtianxia
-[twlkyao]:https://github.com/twlkyao
-[dabing1022]:https://github.com/dabing1022
-[vclwei]:https://github.com/vclwei
-[fd5788]:https://github.com/fd5788
-[siemenliu]:https://github.com/siemenliu
-[youkugems]:https://github.com/youkugems
-[haolloyin]:https://github.com/haolloyin
-[wxstars]:https://github.com/wxstars
-[IceskYsl]:https://github.com/IceskYsl
-[sg552]:https://github.com/sg552
-[superkam]:https://github.com/superkam
-[zac1st1k]:https://github.com/zac1st1k
-[bzsy]:https://github.com/bzsy
-[pyanfield]:https://github.com/pyanfield
-[ericzyh]:https://github.com/ericzyh
-[peiyucn]:https://github.com/peiyucn
-[sunfiled]:https://github.com/sunfiled
-[lzw120]:https://github.com/lzw120
-[viztor]:https://github.com/viztor
-[wongzigii]:https://github.com/wongzigii
-[umcsdon]:https://github.com/umcsdon
-[zq54zquan]:https://github.com/zq54zquan
-[xiehurricane]:https://github.com/xiehurricane
-[Jasonbroker]:https://github.com/Jasonbroker
-[tualatrix]:https://github.com/tualatrix
-[pp-prog]:https://github.com/pp-prog
-[088haizi]:https://github.com/088haizi
-[baocaixiong]:https://github.com/baocaixiong
-[yeahdongcn]:https://github.com/yeahdongcn
-[shinyzhu]:https://github.com/shinyzhu
-[lslxdx]:https://github.com/lslxdx
-[Evilcome]:https://github.com/Evilcome
-[zqp]:https://github.com/zqp
-[NicePiao]:https://github.com/NicePiao
-[LunaticM]:https://github.com/LunaticM
-[menlongsheng]:https://github.com/menlongsheng
-[lifedim]:https://github.com/lifedim
-[happyming]:https://github.com/happyming
-[bruce0505]:https://github.com/bruce0505
-[Lin-H]:https://github.com/Lin-H
-[takalard]:https://github.com/takalard
-[dabing1022]:https://github.com/dabing1022
-[marsprince]:https://github.com/marsprince
