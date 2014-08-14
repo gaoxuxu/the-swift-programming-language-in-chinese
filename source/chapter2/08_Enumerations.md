@@ -1,6 +1,3 @@
-> 翻译：[yankuangshi](https://github.com/yankuangshi)  
-> 校对：[shinyzhu](https://github.com/shinyzhu)
-
 # 枚举（Enumerations）
 ---
 
@@ -26,47 +23,37 @@
 
 使用`enum`关键词并且把它们的整个定义放在一对大括号内：
 
-```swift
-enum SomeEnumeration {
-  // enumeration definition goes here
-}
-```
+    enum SomeEnumeration {
+      // enumeration definition goes here
+    }
 
 以下是指南针四个方向的一个例子：
 
-```swift
-enum CompassPoint {
-  case North
-  case South
-  case East
-  case West
-}
-```
+    enum CompassPoint {
+      case North
+      case South
+      case East
+      case West
+    }
 
 一个枚举中被定义的值（例如 `North`，`South`，`East`和`West`）是枚举的***成员值***（或者***成员***）。`case`关键词表明新的一行成员值将被定义。
 
 > 注意：  
-> 不像 C 和 Objective-C 一样，Swift 的枚举成员在被创建时不会被赋予一个默认的整数值。在上面的`CompassPoints`例子中，`North`，`South`，`East`和`West`不是隐式的等于`0`，`1`，`2`和`3`。相反的，这些不同的枚举成员在`CompassPoint`的一种显示定义中拥有各自不同的值。  
+> 不像 C 和 Objective-C，Swift 的枚举成员在被创建时不会被赋予一个默认的整数值。在上面的`CompassPoints`例子中，`North`，`South`，`East`和`West`不是隐式的等于`0`，`1`，`2`和`3`。相反的，这些不同的枚举成员在`CompassPoint`的一种显式定义中拥有各自不同的值。  
 
 多个成员值可以出现在同一行上，用逗号隔开：
 
-```swift
-enum Planet {
-  case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
-}
-```
+    enum Planet {
+        case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+    }
 
 每个枚举定义了一个全新的类型。像 Swift 中其他类型一样，它们的名字（例如`CompassPoint`和`Planet`）必须以一个大写字母开头。给枚举类型起一个单数名字而不是复数名字，以便于读起来更加容易理解：
 
-```swift
-var directionToHead = CompassPoint.West
-```
+    var directionToHead = CompassPoint.West
 
 `directionToHead`的类型被推断当它被`CompassPoint`的一个可能值初始化。一旦`directionToHead`被声明为一个`CompassPoint`，你可以使用更短的点（.）语法将其设置为另一个`CompassPoint`的值：
 
-```swift
-directionToHead = .East
-```
+    directionToHead = .East
 
 `directionToHead`的类型已知时，当设定它的值时，你可以不再写类型名。使用显式类型的枚举值可以让代码具有更好的可读性。
 
@@ -75,20 +62,18 @@ directionToHead = .East
 
 你可以匹配单个枚举值和`switch`语句：
 
-```swift
-directionToHead = .South
-switch directionToHead {
-case .North:
-    println("Lots of planets have a north")
-case .South:
-    println("Watch out for penguins")
-case .East:
-    println("Where the sun rises")
-case .West:
-    println("Where the skies are blue")
-}
-// 输出 "Watch out for penguins”
-```
+    directionToHead = .South
+    switch directionToHead {
+    case .North:
+        println("Lots of planets have a north")
+    case .South:
+        println("Watch out for penguins")
+    case .East:
+        println("Where the sun rises")
+    case .West:
+        println("Where the skies are blue")
+    }
+    // 输出 "Watch out for penguins”
 
 你可以如此理解这段代码：
 
@@ -100,16 +85,14 @@ case .West:
 
 当不需要匹配每个枚举成员的时候，你可以提供一个默认`default`分支来涵盖所有未明确被提出的任何成员：
 
-```swift
-let somePlanet = Planet.Earth
-switch somePlanet {
-case .Earth:
-    println("Mostly harmless")
-default:
-    println("Not a safe place for humans")
-}
-// 输出 "Mostly harmless”
-```
+    let somePlanet = Planet.Earth
+    switch somePlanet {
+    case .Earth:
+        println("Mostly harmless")
+    default:
+        println("Not a safe place for humans")
+    }
+    // 输出 "Mostly harmless”
 
 <a name="associated_values"></a>
 ## 相关值（Associated Values）
@@ -128,60 +111,50 @@ default:
 
 对于库存跟踪系统来说，能够把 UPC-A 码作为三个整型值的元组，和把 QR 码作为一个任何长度的字符串存储起来是方便的。
 
-在 Swift 中，用来定义两种商品条码的枚举是这样子的：
+在 Swift 中，用来定义两种商品条码的枚举是这样子
 
-```swift
-enum Barcode {
-  case UPCA(Int, Int, Int)
-  case QRCode(String)
-}
-```
+    enum Barcode {
+        case UPCA(Int, Int, Int, Int)
+        case QRCode(String)
+    }
 
 以上代码可以这么理解：
 
-“定义一个名为`Barcode`的枚举类型，它可以是`UPCA`的一个相关值（`Int`，`Int`，`Int`），或者`QRCode`的一个字符串类型（`String`）相关值。”
+“定义一个名为`Barcode`的枚举类型，它可以是`UPCA`的一个相关值（`Int`，`Int`，`Int`，`Int`），或者`QRCode`的一个字符串类型（`String`）相关值。”
 
 这个定义不提供任何`Int`或`String`的实际值，它只是定义了，当`Barcode`常量和变量等于`Barcode.UPCA`或`Barcode.QRCode`时，相关值的类型。
 
 然后可以使用任何一种条码类型创建新的条码，如：
 
-```swift
-var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
-```
+    var productBarcode = Barcode.UPCA(8, 85909, 51226, 3)
 
-以上例子创建了一个名为`productBarcode`的新变量，并且赋给它一个`Barcode.UPCA`的相关元组值`(8, 8590951226, 3)`。提供的“标识符”值在整数字中有一个下划线，使其便于阅读条形码。
+以上例子创建了一个名为`productBarcode`的新变量，并且赋给它一个`Barcode.UPCA`的相关元组值`(8, 85909, 51226, 3)`。
 
 同一个商品可以被分配给一个不同类型的条形码，如：
 
-```swift
-productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
-```
+    productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
 
 这时，原始的`Barcode.UPCA`和其整数值被新的`Barcode.QRCode`和其字符串值所替代。条形码的常量和变量可以存储一个`.UPCA`或者一个`.QRCode`（连同它的相关值），但是在任何指定时间只能存储其中之一。
 
 像以前那样，不同的条形码类型可以使用一个 switch 语句来检查，然而这次相关值可以被提取作为 switch 语句的一部分。你可以在`switch`的 case 分支代码中提取每个相关值作为一个常量（用`let`前缀）或者作为一个变量（用`var`前缀）来使用：
 
-```swift
-switch productBarcode {
-case .UPCA(let numberSystem, let identifier, let check):
-    println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
-case .QRCode(let productCode):
-    println("QR code with value of \(productCode).")
-}
-// 输出 "QR code with value of ABCDEFGHIJKLMNOP.”
-```
+    switch productBarcode {
+    case .UPCA(let numberSystem, let identifier, let check):
+        println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+    case .QRCode(let productCode):
+        println("QR code with value of \(productCode).")
+    }
+    // 输出 "QR code with value of ABCDEFGHIJKLMNOP.”
 
 如果一个枚举成员的所有相关值被提取为常量，或者它们全部被提取为变量，为了简洁，你可以只放置一个`var`或者`let`标注在成员名称前：
 
-```swift
-switch productBarcode {
-case let .UPCA(numberSystem, identifier, check):
-    println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
-case let .QRCode(productCode):
-    println("QR code with value of \(productCode).")
-}
-// 输出 "QR code with value of ABCDEFGHIJKLMNOP."
-```
+    switch productBarcode {
+    case let .UPCA(numberSystem, identifier, check):
+        println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+    case let .QRCode(productCode):
+        println("QR code with value of \(productCode).")
+    }
+    // 输出 "QR code with value of ABCDEFGHIJKLMNOP."
 
 <a name="raw_values"></a>
 ## 原始值（Raw Values）
@@ -190,13 +163,11 @@ case let .QRCode(productCode):
 
 这里是一个枚举成员存储原始 ASCII 值的例子：
 
-```swift
-enum ASCIIControlCharacter: Character {
-    case Tab = "\t"
-    case LineFeed = "\n"
-    case CarriageReturn = "\r"
-}
-```
+    enum ASCIIControlCharacter: Character {
+        case Tab = "\t"
+        case LineFeed = "\n"
+        case CarriageReturn = "\r"
+    }
 
 在这里，称为`ASCIIControlCharacter`的枚举的原始值类型被定义为字符型`Character`，并被设置了一些比较常见的 ASCII 控制字符。字符值的描述请详见字符串和字符[`Strings and Characters`](03_Strings_and_Characters.html)部分。
 
@@ -206,46 +177,38 @@ enum ASCIIControlCharacter: Character {
 
 下面的枚举是对之前`Planet`这个枚举的一个细化，利用原始整型值来表示每个 planet 在太阳系中的顺序：
 
-```swift
-enum Planet: Int {
-    case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
-}
-```
+    enum Planet: Int {
+        case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+    }
 
 自动递增意味着`Planet.Venus`的原始值是`2`，依次类推。
 
 使用枚举成员的`toRaw`方法可以访问该枚举成员的原始值：
 
-```swift
-let earthsOrder = Planet.Earth.toRaw()
-// earthsOrder is 3
-```
+    let earthsOrder = Planet.Earth.toRaw()
+    // earthsOrder is 3
 
 使用枚举的`fromRaw`方法来试图找到具有特定原始值的枚举成员。这个例子通过原始值`7`识别`Uranus`：
 
-```swift
-let possiblePlanet = Planet.fromRaw(7)
-// possiblePlanet is of type Planet? and equals Planet.Uranus
-```
+    let possiblePlanet = Planet.fromRaw(7)
+    // possiblePlanet is of type Planet? and equals Planet.Uranus
 
 然而，并非所有可能的`Int`值都可以找到一个匹配的行星。正因为如此，`fromRaw`方法可以返回一个***可选***的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或“可选的`Planet`”。
 
 如果你试图寻找一个位置为9的行星，通过`fromRaw`返回的可选`Planet`值将是`nil`：
 
-```swift
-let positionToFind = 9
-if let somePlanet = Planet.fromRaw(positionToFind) {
-    switch somePlanet {
-    case .Earth:
-        println("Mostly harmless")
-    default:
-        println("Not a safe place for humans")
+    let positionToFind = 9
+    if let somePlanet = Planet.fromRaw(positionToFind) {
+        switch somePlanet {
+        case .Earth:
+            println("Mostly harmless")
+        default:
+            println("Not a safe place for humans")
+        }
+    } else {
+        println("There isn't a planet at position \(positionToFind)")
     }
-} else {
-    println("There isn't a planet at position \(positionToFind)")
-}
-// 输出 "There isn't a planet at position 9
-```
+    // 输出 "There isn't a planet at position 9
 
 这个范例使用可选绑定（optional binding），通过原始值`9`试图访问一个行星。`if let somePlanet = Planet.fromRaw(9)`语句获得一个可选`Planet`，如果可选`Planet`可以被获得，把`somePlanet`设置成该可选`Planet`的内容。在这个范例中，无法检索到位置为`9`的行星，所以`else`分支被执行。
 
