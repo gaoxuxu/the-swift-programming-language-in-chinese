@@ -1,7 +1,3 @@
-> 翻译：[siemenliu](https://github.com/siemenliu)  
-> 校对：[zq54zquan](https://github.com/zq54zquan)
-
-
 # 下标脚本（Subscripts）
 -----------------
 
@@ -15,48 +11,39 @@
 
 对于同一个目标可以定义多个下标脚本，通过索引值类型的不同来进行重载，而且索引值的个数可以是多个。
 
-> 译者：这里附属脚本重载在本小节中原文并没有任何演示  
-
 <a name="subscript_syntax"></a>
 ## 下标脚本语法
 
 下标脚本允许你通过在实例后面的方括号中传入一个或者多个的索引值来对实例进行访问和赋值。语法类似于实例方法和计算型属性的混合。与定义实例方法类似，定义下标脚本使用`subscript`关键字，显式声明入参（一个或多个）和返回类型。与实例方法不同的是下标脚本可以设定为读写或只读。这种方式又有点像计算型属性的getter和setter：
 
-```swift
-subscript(index: Int) -> Int {
-    get {
-      // 返回与入参匹配的Int类型的值
+    subscript(index: Int) -> Int {
+        get {
+            // 返回与入参匹配的Int类型的值
+        }
+        set(newValue) {
+            // 执行赋值操作
+        }
     }
-
-    set(newValue) {
-      // 执行赋值操作
-    }
-}
-```
 
 `newValue`的类型必须和下标脚本定义的返回类型相同。与计算型属性相同的是set的入参声明`newValue`就算不写，在set代码块中依然可以使用默认的`newValue`这个变量来访问新赋的值。
 
 与只读计算型属性一样，可以直接将原本应该写在`get`代码块中的代码写在`subscript`中：
 
-```swift
-subscript(index: Int) -> Int {
-    // 返回与入参匹配的Int类型的值
-}
-```
+    subscript(index: Int) -> Int {
+        // 返回与入参匹配的Int类型的值
+    }
 
 下面代码演示了一个在`TimesTable`结构体中使用只读下标脚本的用法，该结构体用来展示传入整数的*n*倍。
 
-```swift
-struct TimesTable {
-    let multiplier: Int
-    subscript(index: Int) -> Int {
-      return multiplier * index
+    struct TimesTable {
+        let multiplier: Int
+        subscript(index: Int) -> Int {
+            return multiplier * index
+        }
     }
-}
-let threeTimesTable = TimesTable(multiplier: 3)
-println("3的6倍是\(threeTimesTable[6])")
-// 输出 "3的6倍是18"
-```
+    let threeTimesTable = TimesTable(multiplier: 3)
+    println("3的6倍是\(threeTimesTable[6])")
+    // 输出 "3的6倍是18"
 
 在上例中，通过`TimesTable`结构体创建了一个用来表示索引值三倍的实例。数值`3`作为结构体`构造函数`入参初始化实例成员`multiplier`。
 
@@ -72,12 +59,10 @@ println("3的6倍是\(threeTimesTable[6])")
 
 例如，Swift 的字典（Dictionary）实现了通过下标脚本来对其实例中存放的值进行存取操作。在下标脚本中使用和字典索引相同类型的值，并且把一个字典值类型的值赋值给这个下标脚本来为字典设值：
 
-```swift
-var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-numberOfLegs["bird"] = 2
-```
+    var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
+    numberOfLegs["bird"] = 2
 
-上例定义一个名为`numberOfLegs`的变量并用一个字典字面量初始化出了包含三对键值的字典实例。`numberOfLegs`的字典存放值类型推断为`Dictionary<String, Int>`。字典实例创建完成之后通过下标脚本的方式将整型值`2`赋值到字典实例的索引为`bird`的位置中。
+上例定义一个名为`numberOfLegs`的变量并用一个字典字面量初始化出了包含三对键值的字典实例。`numberOfLegs`的字典存放值类型推断为`[String: Int]`。字典实例创建完成之后通过下标脚本的方式将整型值`2`赋值到字典实例的索引为`bird`的位置中。
 
 更多关于字典（Dictionary）下标脚本的信息请参考[读取和修改字典](../chapter2/04_Collection_Types.html)
 
@@ -93,75 +78,55 @@ numberOfLegs["bird"] = 2
 
 一个下标脚本入参是最常见的情况，但只要有合适的场景也可以定义多个下标脚本入参。如下例定义了一个`Matrix`结构体，将呈现一个`Double`类型的二维矩阵。`Matrix`结构体的下标脚本需要两个整型参数：
 
-```swift
-struct Matrix {
-    let rows: Int, columns: Int
-    var grid: Double[]
-    init(rows: Int, columns: Int) {
-      self.rows = rows
-      self.columns = columns
-      grid = Array(count: rows * columns, repeatedValue: 0.0)
-    }
-    func indexIsValidForRow(row: Int, column: Int) -> Bool {
-        return row >= 0 && row < rows && column >= 0 && column < columns
-    }
-    subscript(row: Int, column: Int) -> Double {
-        get {
-            assert(indexIsValidForRow(row, column: column), "Index out of range")
-            return grid[(row * columns) + column]
+    struct Matrix {
+        let rows: Int, columns: Int
+        var grid: Double[]
+        init(rows: Int, columns: Int) {
+            self.rows = rows
+            self.columns = columns
+            grid = Array(count: rows * columns, repeatedValue: 0.0)
         }
-        set {
-            assert(indexIsValidForRow(row, column: column), "Index out of range")
-            grid[(row * columns) + column] = newValue
+        func indexIsValidForRow(row: Int, column: Int) -> Bool {
+            return row >= 0 && row < rows && column >= 0 && column < columns
+        }
+        subscript(row: Int, column: Int) -> Double {
+            get {
+                assert(indexIsValidForRow(row, column: column), "Index out of range")
+                return grid[(row * columns) + column]
+            }
+            set {
+                assert(indexIsValidForRow(row, column: column), "Index out of range")
+                grid[(row * columns) + column] = newValue
+            }
         }
     }
-}
-```
 
 `Matrix`提供了一个两个入参的构造方法，入参分别是`rows`和`columns`，创建了一个足够容纳`rows * columns`个数的`Double`类型数组。为了存储，将数组的大小和数组每个元素初始值0.0，都传入数组的构造方法中来创建一个正确大小的新数组。关于数组的构造方法和析构方法请参考[创建并且构造一个数组](../chapter2/04_Collection_Types.html)。
 
 你可以通过传入合适的`row`和`column`的数量来构造一个新的`Matrix`实例：
 
-```swift
-var matrix = Matrix(rows: 2, columns: 2)
-```
+    var matrix = Matrix(rows: 2, columns: 2)
 
 上例中创建了一个新的两行两列的`Matrix`实例。在阅读顺序从左上到右下的`Matrix`实例中的数组实例`grid`是矩阵二维数组的扁平化存储：
 
-```swift
-// 示意图
-grid = [0.0, 0.0, 0.0, 0.0]
-
-      col0  col1
-row0   [0.0,     0.0,
-row1    0.0,  0.0]
-```
+![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/subscriptMatrix01_2x.png)
 
 将值赋给带有`row`和`column`下标脚本的`matrix`实例表达式可以完成赋值操作，下标脚本入参使用逗号分割
 
-```swift
-matrix[0, 1] = 1.5
-matrix[1, 0] = 3.2
-```
+    matrix[0, 1] = 1.5
+    matrix[1, 0] = 3.2
 
 上面两条语句分别`让matrix`的右上值为 1.5，坐下值为 3.2：
 
-```swift
-[0.0, 1.5,
- 3.2, 0.0]
-```
+![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/subscriptMatrix02_2x.png)
 
 `Matrix`下标脚本的`getter`和`setter`中同时调用了下标脚本入参的`row`和`column`是否有效的判断。为了方便进行断言，`Matrix`包含了一个名为`indexIsValid`的成员方法，用来确认入参的`row`或`column`值是否会造成数组越界：
 
-```swift
-func indexIsValidForRow(row: Int, column: Int) -> Bool {
-    return row >= 0 && row < rows && column >= 0 && column < columns
-}
-```
+    func indexIsValidForRow(row: Int, column: Int) -> Bool {
+        return row >= 0 && row < rows && column >= 0 && column < columns
+    }
 
 断言在下标脚本越界时触发：
 
-```swift
-let someValue = matrix[2, 2]
-// 断言将会触发，因为 [2, 2] 已经超过了matrix的最大长度
-```
+    let someValue = matrix[2, 2]
+    // 断言将会触发，因为 [2, 2] 已经超过了matrix的最大长度
