@@ -1,6 +1,3 @@
-> 翻译：[shinyzhu](https://github.com/shinyzhu)  
-> 校对：[pp-prog](https://github.com/pp-prog)
-
 # 属性 (Properties)
 ---
 
@@ -27,16 +24,14 @@
 
 下面的例子定义了一个名为`FixedLengthRange`的结构体，它描述了一个在创建后无法修改值域宽度的区间：
 
-```swift
-struct FixedLengthRange {
-    var firstValue: Int
-    let length: Int
-}
-var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
-// 该区间表示整数0，1，2
-rangeOfThreeItems.firstValue = 6
-// 该区间现在表示整数6，7，8
-```
+    struct FixedLengthRange {
+        var firstValue: Int
+        let length: Int
+    }
+    var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
+    // 该区间表示整数0，1，2
+    rangeOfThreeItems.firstValue = 6
+    // 该区间现在表示整数6，7，8
 
 `FixedLengthRange`的实例包含一个名为`firstValue`的变量存储属性和一个名为`length`的常量存储属性。在上面的例子中，`length`在创建实例的时候被赋值，因为它是一个常量存储属性，所以之后无法修改它的值。
 
@@ -45,12 +40,10 @@ rangeOfThreeItems.firstValue = 6
 
 如果创建了一个结构体的实例并赋值给一个常量，则无法修改实例的任何属性，即使定义了变量存储属性：
 
-```swift
-let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
-// 该区间表示整数0，1，2，3
-rangeOfFourItems.firstValue = 6
-// 尽管 firstValue 是个变量属性，这里还是会报错
-```
+    let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
+    // 该区间表示整数0，1，2，3
+    rangeOfFourItems.firstValue = 6
+    // 尽管 firstValue 是个变量属性，这里还是会报错
 
 因为`rangeOfFourItems`声明成了常量（用`let`关键字），即使`firstValue`是一个变量属性，也无法再修改它了。
 
@@ -70,27 +63,25 @@ rangeOfFourItems.firstValue = 6
 
 下面的例子使用了延迟存储属性来避免复杂类的不必要的初始化。例子中定义了`DataImporter`和`DataManager`两个类，下面是部分代码：
 
-```swift
-class DataImporter {
-    /*
-    DataImporter 是一个将外部文件中的数据导入的类。
-    这个类的初始化会消耗不少时间。
-    */
-    var fileName = "data.txt"
-    // 这是提供数据导入功能
-}
+    class DataImporter {
+        /*
+        DataImporter 是一个将外部文件中的数据导入的类。
+        这个类的初始化会消耗不少时间。
+        */
+        var fileName = "data.txt"
+        // 这是提供数据导入功能
+    }
 
-class DataManager {
-    @lazy var importer = DataImporter()
-    var data = String[]()
-    // 这是提供数据管理功能
-}
+    class DataManager {
+        @lazy var importer = DataImporter()
+        var data = String[]()
+        // 这是提供数据管理功能
+    }
 
-let manager = DataManager()
-manager.data += "Some data"
-manager.data += "Some more data"
-// DataImporter 实例的 importer 属性还没有被创建
-```
+    let manager = DataManager()
+    manager.data += "Some data"
+    manager.data += "Some more data"
+    // DataImporter 实例的 importer 属性还没有被创建
 
 `DataManager`类包含一个名为`data`的存储属性，初始值是一个空的字符串（`String`）数组。虽然没有写出全部代码，`DataManager`类的目的是管理和提供对这个字符串数组的访问。
 
@@ -100,54 +91,49 @@ manager.data += "Some more data"
 
 由于使用了`@lazy`，`importer`属性只有在第一次被访问的时候才被创建。比如访问它的属性`fileName`时：
 
-```swift
-println(manager.importer.fileName)
-// DataImporter 实例的 importer 属性现在被创建了
-// 输出 "data.txt”
-```
+    println(manager.importer.fileName)
+    // DataImporter 实例的 importer 属性现在被创建了
+    // 输出 "data.txt”
 
 <a name="stored_properties_and_instance_variables"></a>
 ### 存储属性和实例变量
 
-如果您有过 Objective-C 经验，应该知道Objective-C为类实例存储值和引提供两种方法。对于属性来说，也可以使用实例变量作为属性值的后端存储。
+如果您有过 Objective-C 经验，应该知道Objective-C为类实例存储值和引用提供两种方法。对于属性来说，也可以使用实例变量作为属性值的后端存储。
 
-Swift 编程语言中把这些理论统一用属性来实现。Swift 中的属性没有对应的实例变量，属性的后端存储也无法直接访问。这就避免了不同场景下访问方式的困扰，同时也将属性的定义简化成一个语句。
-一个类型中属性的全部信息——包括命名、类型和内存管理特征——都在唯一一个地方（类型定义中）定义。
+Swift 编程语言中把这些理论统一用属性来实现。Swift 中的属性没有对应的实例变量，属性的后端存储也无法直接访问。这就避免了不同场景下访问方式的困扰，同时也将属性的定义简化成一个语句。一个类型中属性的全部信息——包括命名、类型和内存管理特征——都在唯一一个地方（类型定义中）定义。
 
 <a name="computed_properties"></a>
 ## 计算属性
 
 除存储属性外，类、结构体和枚举可以定义*计算属性*，计算属性不直接存储值，而是提供一个 getter 来获取值，一个可选的 setter 来间接设置其他属性或变量的值。
 
-```swift
-struct Point {
-    var x = 0.0, y = 0.0
-}
-struct Size {
-    var width = 0.0, height = 0.0
-}
-struct Rect {
-    var origin = Point()
-    var size = Size()
-    var center: Point {
-    get {
-        let centerX = origin.x + (size.width / 2)
-        let centerY = origin.y + (size.height / 2)
-        return Point(x: centerX, y: centerY)
+    struct Point {
+        var x = 0.0, y = 0.0
     }
-    set(newCenter) {
-        origin.x = newCenter.x - (size.width / 2)
-        origin.y = newCenter.y - (size.height / 2)
+    struct Size {
+        var width = 0.0, height = 0.0
     }
+    struct Rect {
+        var origin = Point()
+        var size = Size()
+        var center: Point {
+        get {
+            let centerX = origin.x + (size.width / 2)
+            let centerY = origin.y + (size.height / 2)
+            return Point(x: centerX, y: centerY)
+        }
+        set(newCenter) {
+            origin.x = newCenter.x - (size.width / 2)
+            origin.y = newCenter.y - (size.height / 2)
+        }
+        }
     }
-}
-var square = Rect(origin: Point(x: 0.0, y: 0.0),
-    size: Size(width: 10.0, height: 10.0))
-let initialSquareCenter = square.center
-square.center = Point(x: 15.0, y: 15.0)
-println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
-// 输出 "square.origin is now at (10.0, 10.0)”
-```
+    var square = Rect(origin: Point(x: 0.0, y: 0.0),
+        size: Size(width: 10.0, height: 10.0))
+    let initialSquareCenter = square.center
+    square.center = Point(x: 15.0, y: 15.0)
+    println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
+    // 输出 "square.origin is now at (10.0, 10.0)”
 
 这个例子定义了 3 个几何形状的结构体：
 
@@ -170,23 +156,21 @@ println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 
 如果计算属性的 setter 没有定义表示新值的参数名，则可以使用默认名称`newValue`。下面是使用了便捷 setter 声明的`Rect`结构体代码：
 
-```swift
-struct AlternativeRect {
-    var origin = Point()
-    var size = Size()
-    var center: Point {
-    get {
-        let centerX = origin.x + (size.width / 2)
-        let centerY = origin.y + (size.height / 2)
-        return Point(x: centerX, y: centerY)
+    struct AlternativeRect {
+        var origin = Point()
+        var size = Size()
+        var center: Point {
+        get {
+            let centerX = origin.x + (size.width / 2)
+            let centerY = origin.y + (size.height / 2)
+            return Point(x: centerX, y: centerY)
+        }
+        set {
+            origin.x = newValue.x - (size.width / 2)
+            origin.y = newValue.y - (size.height / 2)
+        }
+        }
     }
-    set {
-        origin.x = newValue.x - (size.width / 2)
-        origin.y = newValue.y - (size.height / 2)
-    }
-    }
-}
-```
 
 <a name="readonly_computed_properties"></a>
 ### 只读计算属性
@@ -194,23 +178,20 @@ struct AlternativeRect {
 只有 getter 没有 setter 的计算属性就是*只读计算属性*。只读计算属性总是返回一个值，可以通过点运算符访问，但不能设置新的值。
 
 > 注意：
->
 > 必须使用`var`关键字定义计算属性，包括只读计算属性，因为它们的值不是固定的。`let`关键字只用来声明常量属性，表示初始化后再也无法修改的值。
 
 
 只读计算属性的声明可以去掉`get`关键字和花括号：
 
-```swift
-struct Cuboid {
-    var width = 0.0, height = 0.0, depth = 0.0
-    var volume: Double {
-    return width * height * depth
+    struct Cuboid {
+        var width = 0.0, height = 0.0, depth = 0.0
+        var volume: Double {
+            return width * height * depth
+        }
     }
-}
-let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
-println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
-// 输出 "the volume of fourByFiveByTwo is 40.0"
-```
+    let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
+    println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
+    // 输出 "the volume of fourByFiveByTwo is 40.0"
 
 这个例子定义了一个名为`Cuboid`的结构体，表示三维空间的立方体，包含`width`、`height`和`depth`属性，还有一个名为`volume`的只读计算属性用来返回立方体的体积。设置`volume`的值毫无意义，因为通过`width`、`height`和`depth`就能算出`volume`。然而，`Cuboid`提供一个只读计算属性来让外部用户直接获取体积是很有用的。
 
@@ -233,36 +214,33 @@ println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 
 类似地，`didSet`观察器会将旧的属性值作为参数传入，可以为该参数命名或者使用默认参数名`oldValue`。
 
-> 注意：
->
+> 注意：  
 > `willSet`和`didSet`观察器在属性初始化过程中不会被调用，它们只会当属性的值在初始化之外的地方被设置时被调用。
 
 这里是一个`willSet`和`didSet`的实际例子，其中定义了一个名为`StepCounter`的类，用来统计当人步行时的总步数，可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
 
-```swift
-class StepCounter {
-    var totalSteps: Int = 0 {
-    willSet(newTotalSteps) {
-        println("About to set totalSteps to \(newTotalSteps)")
-    }
-    didSet {
-        if totalSteps > oldValue  {
-            println("Added \(totalSteps - oldValue) steps")
+    class StepCounter {
+        var totalSteps: Int = 0 {
+        willSet(newTotalSteps) {
+            println("About to set totalSteps to \(newTotalSteps)")
+        }
+        didSet {
+            if totalSteps > oldValue  {
+                println("Added \(totalSteps - oldValue) steps")
+            }
+        }
         }
     }
-    }
-}
-let stepCounter = StepCounter()
-stepCounter.totalSteps = 200
-// About to set totalSteps to 200
-// Added 200 steps
-stepCounter.totalSteps = 360
-// About to set totalSteps to 360
-// Added 160 steps
-stepCounter.totalSteps = 896
-// About to set totalSteps to 896
-// Added 536 steps
-```
+    let stepCounter = StepCounter()
+    stepCounter.totalSteps = 200
+    // About to set totalSteps to 200
+    // Added 200 steps
+    stepCounter.totalSteps = 360
+    // About to set totalSteps to 360
+    // Added 160 steps
+    stepCounter.totalSteps = 896
+    // About to set totalSteps to 896
+    // Added 536 steps
 
 `StepCounter`类定义了一个`Int`类型的属性`totalSteps`，它是一个存储属性，包含`willSet`和`didSet`观察器。
 
@@ -311,25 +289,23 @@ stepCounter.totalSteps = 896
 
 使用关键字`static`来定义值类型的类型属性，关键字`class`来为类（class）定义类型属性。下面的例子演示了存储型和计算型类型属性的语法：
 
-```swift
-struct SomeStructure {
-    static var storedTypeProperty = "Some value."
-    static var computedTypeProperty: Int {
-    // 这里返回一个 Int 值
+    struct SomeStructure {
+        static var storedTypeProperty = "Some value."
+        static var computedTypeProperty: Int {
+            // 这里返回一个 Int 值
+        }
     }
-}
-enum SomeEnumeration {
-    static var storedTypeProperty = "Some value."
-    static var computedTypeProperty: Int {
-    // 这里返回一个 Int 值
+    enum SomeEnumeration {
+        static var storedTypeProperty = "Some value."
+        static var computedTypeProperty: Int {
+            // 这里返回一个 Int 值
+        }
     }
-}
-class SomeClass {
-    class var computedTypeProperty: Int {
-    // 这里返回一个 Int 值
+    class SomeClass {
+        class var computedTypeProperty: Int {
+            // 这里返回一个 Int 值
+        }
     }
-}
-```
 
 > 注意：  
 > 例子中的计算型类型属性是只读的，但也可以定义可读可写的计算型类型属性，跟实例计算属性的语法类似。  
@@ -339,16 +315,14 @@ class SomeClass {
 
 跟实例的属性一样，类型属性的访问也是通过点运算符来进行，但是，类型属性是通过类型本身来获取和设置，而不是通过实例。比如：
 
-```swift
-println(SomeClass.computedTypeProperty)
-// 输出 "42"
+    println(SomeClass.computedTypeProperty)
+    // 输出 "42"
 
-println(SomeStructure.storedTypeProperty)
-// 输出 "Some value."
-SomeStructure.storedTypeProperty = "Another value."
-println(SomeStructure.storedTypeProperty)
-// 输出 "Another value.”
-```
+    println(SomeStructure.storedTypeProperty)
+    // 输出 "Some value."
+    SomeStructure.storedTypeProperty = "Another value."
+    println(SomeStructure.storedTypeProperty)
+    // 输出 "Another value.”
 
 下面的例子定义了一个结构体，使用两个存储型类型属性来表示多个声道的声音电平值，每个声道有一个 0 到 10 之间的整数表示声音电平值。
 
@@ -358,26 +332,24 @@ println(SomeStructure.storedTypeProperty)
 
 上面所描述的声道模型使用`AudioChannel`结构体来表示：
 
-```swift
-struct AudioChannel {
-    static let thresholdLevel = 10
-    static var maxInputLevelForAllChannels = 0
-    var currentLevel: Int = 0 {
-    didSet {
-        if currentLevel > AudioChannel.thresholdLevel {
-            // 将新电平值设置为阀值
-            currentLevel = AudioChannel.thresholdLevel
+    struct AudioChannel {
+        static let thresholdLevel = 10
+        static var maxInputLevelForAllChannels = 0
+        var currentLevel: Int = 0 {
+        didSet {
+            if currentLevel > AudioChannel.thresholdLevel {
+                // 将新电平值设置为阀值
+                currentLevel = AudioChannel.thresholdLevel
+            }
+            if currentLevel > AudioChannel.maxInputLevelForAllChannels {
+                // 存储当前电平值作为新的最大输入电平
+                AudioChannel.maxInputLevelForAllChannels = currentLevel
+            }
         }
-        if currentLevel > AudioChannel.maxInputLevelForAllChannels {
-            // 存储当前电平值作为新的最大输入电平
-            AudioChannel.maxInputLevelForAllChannels = currentLevel
         }
     }
-    }
-}
-```
 
-结构`AudioChannel`定义了 2 个存储型类型属性来实现上述功能。第一个是`thresholdLevel`，表示声音电平的最大上限阈值，它是一个取值为 10 的常量，对所有实例都可见，如果声音电平高于 10，则取最大上限值 10（见后面描述）。
+结构`AudioChannel`定义了 2 个存储型类型属性来实现上述功能。第一个是`thresholdLevel`，表示声音电平的最大上限阈值，它是一个取值为 `10` 的常量，对所有实例都可见，如果声音电平高于 10，则取最大上限值 10（见后面描述）。
 
 第二个类型属性是变量存储型属性`maxInputLevelForAllChannels`，它用来表示所有`AudioChannel`实例的电平值的最大值，初始值是 0。
 
@@ -393,27 +365,21 @@ struct AudioChannel {
 
 可以使用结构体`AudioChannel`来创建表示立体声系统的两个声道`leftChannel`和`rightChannel`：
 
-```swift
-var leftChannel = AudioChannel()
-var rightChannel = AudioChannel()
-```
+    var leftChannel = AudioChannel()
+    var rightChannel = AudioChannel()
 
 如果将左声道的电平设置成 7，类型属性`maxInputLevelForAllChannels`也会更新成 7：
 
-```swift
-leftChannel.currentLevel = 7
-println(leftChannel.currentLevel)
-// 输出 "7"
-println(AudioChannel.maxInputLevelForAllChannels)
-// 输出 "7"
-```
+    leftChannel.currentLevel = 7
+    println(leftChannel.currentLevel)
+    // 输出 "7"
+    println(AudioChannel.maxInputLevelForAllChannels)
+    // 输出 "7"
 
 如果试图将右声道的电平设置成 11，则会将右声道的`currentLevel`修正到最大值 10，同时`maxInputLevelForAllChannels`的值也会更新到 10：
 
-```swift
-rightChannel.currentLevel = 11
-println(rightChannel.currentLevel)
-// 输出 "10"
-println(AudioChannel.maxInputLevelForAllChannels)
-// 输出 "10"
-```
+    rightChannel.currentLevel = 11
+    println(rightChannel.currentLevel)
+    // 输出 "10"
+    println(AudioChannel.maxInputLevelForAllChannels)
+    // 输出 "10"
